@@ -1,0 +1,63 @@
+@page
+@model NorthwindApp.Pages.Orders.IndexModel
+
+@{
+    Layout = "Shared/_Layout";
+}
+<div class="container">
+    <!-- Order table -->
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label>Employee Name</label>
+                <label>@Model.OrderData?.Employee?.FirstName - @Model.OrderData?.Employee?.LastName</label>
+            </div>
+
+            <div class="form-group">
+                <label>Customer</label>
+                <label>@Model.OrderData.Customer.ContactName</label>
+            </div>
+        </div>
+        <div class="col">
+
+        </div>
+    </div>
+    
+    <!-- Detail -->
+    <div class="row">
+        <div class="col">
+            <table>
+                <thead>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Product Name</th>
+                    <th>Product Quanty</th>
+                    <th>Price</th>
+                    <th>Sub Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                @{
+                    var grandTotal = 0;
+                }
+                @foreach (var item in Model.OrderData.OrderDetails)
+                {
+                    var subTotal = item.Quantity * item.UnitPrice;
+                    grandTotal += subTotal;
+                    <tr>
+                        <td>@item.Product?.ProductId</td>
+                        <td>@item.Product.ProductName</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.UnitPrice</td>
+                        <td>@subTotal</td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="4">Grand Total</td>
+                    <td>Rp. @grandTotal</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
